@@ -15,7 +15,11 @@ https://github.com/tarssito/desafio-datainfo.git
 
 **2. Iniciar serviço do MySQL**
 
-**3. Download do drive: ** mysql-connector-java-5.1.47-bin.jar
+**3. Download do jar Mysql**
+
+```bash
+mysql-connector-java-5.1.47-bin.jar
+```
 
 **4. Configuração do drive e datasource mysql no servidor Wildfly**
 
