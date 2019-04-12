@@ -10,7 +10,7 @@
 **1. Clone a aplicação**
 
 ```bash
-https://github.com/tarssito/api-cadel.git
+https://github.com/tarssito/desafio-datainfo.git
 ```
 
 **2. Iniciar serviço do MySQL**
