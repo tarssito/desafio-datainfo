@@ -4,15 +4,15 @@
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
              version="2.1">
 
-    <persistence-unit name="crudUserPU" transaction-type="JTA">
+    <persistence-unit name="DesafioDataInfoDs" transaction-type="JTA">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <jta-data-source>java:jboss/datasources/crudUserDs</jta-data-source>
+        <jta-data-source>java:jboss/datasources/DesafioDataInfoDs</jta-data-source>
 
 		<properties>
          	<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
          	<property name="hibernate.show_sql" value="true"/>
          	<property name="hibernate.format_sql" value="true"/>
-         	<property name="hibernate.hbm2ddl.auto" value="update"/>
+         	<property name="hibernate.hbm2ddl.auto" value="create-drop"/>
       	</properties>
       	
     </persistence-unit>

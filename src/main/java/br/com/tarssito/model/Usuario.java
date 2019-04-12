@@ -44,8 +44,9 @@ public class Usuario implements Model<Long> {
 	@Column(name = "nu_telefone", length = 11)
 	private String telefone;
 
-	public Usuario(String cpf, String nome, String email, String situacao, int perfil, Funcao funcao,
+	public Usuario(Long id, String cpf, String nome, String email, String situacao, int perfil, Funcao funcao,
 			String telefone) {
+		this.id = id;
 		this.cpf = cpf;
 		this.nome = nome;
 		this.email = email;

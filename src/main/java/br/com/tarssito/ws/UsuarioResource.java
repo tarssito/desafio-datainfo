@@ -24,6 +24,7 @@ import javax.ws.rs.core.Response.Status;
 import br.com.tarssito.dto.UsuarioDTO;
 import br.com.tarssito.model.Usuario;
 import br.com.tarssito.services.UsuarioService;
+import br.com.tarssito.util.PATCH;
 
 @Named
 @Path("usuarios")
@@ -57,7 +58,7 @@ public class UsuarioResource {
 	@POST
 	public Response insert(UsuarioDTO usuarioDTO) {
 		try {
-			Usuario usuario = service.fromInsertDTO(usuarioDTO);
+			Usuario usuario = service.fromDTO(usuarioDTO, null);
 			service.save(usuario);
 			return Response.status(Status.CREATED).build();
 		} catch (ConstraintViolationException cvex) {
@@ -72,16 +73,33 @@ public class UsuarioResource {
 	@PUT
 	@Path("/{id}")
 	public Response update(UsuarioDTO usuarioDTO, @PathParam("id") Long id) {
-		Usuario usuario = service.fromUpdateDTO(usuarioDTO, id);
-		service.save(usuario);
-		return Response.ok().build();
+		try {
+			Usuario usuario = service.fromDTO(usuarioDTO, id);
+			service.save(usuario);
+			return Response.status(Status.NO_CONTENT).build();
+		} catch (ConstraintViolationException cvex) {
+			final Set<String> erros = cvex.getConstraintViolations().stream().map(ConstraintViolation::getMessage)
+					.collect(Collectors.toSet());
+			return Response.status(Response.Status.BAD_REQUEST).entity(erros).build();
+		} catch (Exception ex) {
+			return Response.status(Response.Status.BAD_REQUEST).entity("Instabilidade no serviço").build();
+		}
 	}
 
+	@PATCH
+	@Path("/{id}")
+	public Response updateSituacao(UsuarioDTO usuarioDTO, @PathParam("id") Long id) {
+		Usuario usuario = service.findById(id);
+		usuario.setSituacao(usuarioDTO.getIc_situacao());
+		service.save(usuario);
+		return Response.status(Status.NO_CONTENT).build();		
+	}
+	
 	@DELETE
 	@Path("/{id}")
-	public Response update(@PathParam("id") Long id) {
+	public Response delete(@PathParam("id") Long id) {
 		Usuario usuario = service.findById(id);
 		service.remove(usuario);
-		return Response.ok().build();
+		return Response.status(Status.NO_CONTENT).build();
 	}
 }
